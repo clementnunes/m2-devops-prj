@@ -3,13 +3,12 @@ volumes:
   prometheus-data: { }
   grafana-data: { }
 
-services:
-  ecoshop:
-    image: 0sko/simple-flask-app-preproduction:latest
-    container_name: ecoshop
-    ports:
-      - "5000:5000"
+networks:
+  dbnet:
+    external: true
+    name: dbnet
 
+services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -21,8 +20,8 @@ services:
       - ./config/alert_rules.yml:/etc/prometheus/alert_rules.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-    links:
-      - ecoshop
+    networks:
+      - dbnet
 
   grafana:
     image: grafana/grafana
@@ -36,5 +35,5 @@ services:
       - ./config/grafana_datasources.yml:/etc/grafana/provisioning/datasources/all.yml
       - ./config/grafana_config.ini:/etc/grafana/config.ini
       - ./grafana-data:/var/lib/grafana
-    links:
-      - prometheus
+    networks:
+      - dbnet

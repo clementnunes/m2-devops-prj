@@ -1,0 +1,17 @@
+version: '3.7'
+
+networks:
+  dbnet:
+    external: true
+    name: dbnet
+
+services:
+  terraform:
+    image: hashicorp/terraform:latest
+    volumes:
+      - ./terraform:/etc/terraform
+    working_dir: /terraform
+    networks:
+      - dbnet
+    command:
+      - sh -c "terraform init" && "terraform plan" && "terraform apply"
