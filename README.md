@@ -16,7 +16,7 @@ Clone the Repository:
 Open a terminal or command prompt and use the git clone command to clone the repository.
 
 ```
-git clone https://github.com/clementnunes/m2-secure-coding-app
+git clone https://github.com/clementnunes/m2-devops-prj
 ```
 
 Navigate to the Project Directory:
